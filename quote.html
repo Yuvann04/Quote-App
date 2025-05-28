@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Quote Test</title></head>
+<body>
+  <div id="quote">Loading quote...</div>
+  <button id="new-quote">New Quote</button>
+
+  <script>
+    const quoteDiv = document.getElementById('quote');
+    const newQuoteBtn = document.getElementById('new-quote');
+
+    async function fetchQuote() {
+      try {
+        const res = await fetch('https://www.brainyquote.com/topics/random-quotes');
+        const data = await res.json();
+        quoteDiv.textContent = `"${data.content}" — ${data.author}`;
+      } catch {
+        quoteDiv.textContent = 'Failed to fetch quote.';
+      }
+    }
+
+    newQuoteBtn.addEventListener('click', fetchQuote);
+
+    fetchQuote();
+  </script>
+</body>
+</html>
