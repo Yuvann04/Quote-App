@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#317EFB"/>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icons/icon-192.png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quote of the Day</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  
 </head>
 <body>
-  <div class="container">
+  <header>
     <h1>Quote of the Day</h1>
-    <div id="quote">Loading...</div>
+    <button id="theme-toggle">🌙 Dark Mode</button>
+  </header>
+  <main>
+    <section id="quote-section">
+      <blockquote id="quote">Loading...</blockquote>
+      <cite id="author"></cite>
+    </section>
     <button id="new-quote">Fetch New Quote</button>
-    <button id="toggle-theme">Toggle Dark Mode</button>
-  </div>
-
+  </main>
   <script src="app.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
-    }
-  </script>
 </body>
 </html>

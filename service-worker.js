@@ -1,38 +1,75 @@
-const CACHE_NAME = 'quote-pwa-v1';
-const STATIC_FILES = [
+const CACHE_NAME = 'quote-app-cache-v1';
+const OFFLINE_URL = 'offline.html'; // optional offline fallback
+
+const FILES_TO_CACHE = [
   '/',
   '/index.html',
   '/styles.css',
   '/app.js',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png'
+  '/icon-192.png', // only if this exists
+  '/icon-512.png', // only if this exists
+  // optionally add OFFLINE_URL here
 ];
 
-self.addEventListener('install', event => {
+// Install event – cache static assets
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_FILES))
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(FILES_TO_CACHE);
+    })
   );
+  self.skipWaiting();
 });
 
-self.addEventListener('activate', event => {
+// Activate event – clean old caches if needed
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(keys =>
+    caches.keys().then((keyList) =>
       Promise.all(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+        keyList.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
       )
     )
   );
+  self.clients.claim();
 });
 
-self.addEventListener('fetch', event => {
+// Fetch event – serve from cache, try network, handle errors
+self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request);
-      })
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return fetch(event.request)
+        .then((networkResponse) => {
+          // Only cache successful responses
+          if (
+            !networkResponse ||
+            networkResponse.status !== 200 ||
+            networkResponse.type !== 'basic'
+          ) {
+            return networkResponse;
+          }
+
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+
+          return networkResponse;
+        })
+        .catch(() => {
+          // Optionally serve fallback content for failed requests
+          // return caches.match(OFFLINE_URL);
+          return new Response('You are offline, and the resource is not cached.');
+        });
+    })
   );
 });

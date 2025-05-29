@@ -1,10 +1,10 @@
 {
   "name": "Quote of the Day",
-  "short_name": "QuoteApp",
+  "short_name": "Quotes",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#317EFB",
+  "background_color": "#f9f9f9",
+  "theme_color": "#0077ff",
   "icons": [
     {
       "src": "icons/icon-192.png",
