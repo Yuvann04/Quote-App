@@ -6,8 +6,16 @@ const themeToggleBtn = document.getElementById('theme-toggle');
 const QUOTE_API = 'https://zenquotes.io/api/random';
 const LOCAL_QUOTES_KEY = 'quotes_cache';
 
+// Display a loading message
+function displayLoading() {
+  quoteEl.textContent = 'Loading...';
+  authorEl.textContent = '';
+}
+
 // Load and display a quote
 async function fetchAndDisplayQuote() {
+  displayLoading();
+
   try {
     const proxyURL = 'https://api.allorigins.win/get?url=' + encodeURIComponent(QUOTE_API);
     const res = await fetch(proxyURL);
@@ -19,7 +27,7 @@ async function fetchAndDisplayQuote() {
     displayQuote(parsed[0].q, parsed[0].a);
     saveQuoteToLocal(parsed[0].q, parsed[0].a);
   } catch (err) {
-    // If offline or error, try to show a cached quote
+    console.error('Fetch failed:', err.message);
     const cached = getRandomCachedQuote();
     if (cached) {
       displayQuote(cached.content, cached.author + ' (offline)');
@@ -37,7 +45,6 @@ function displayQuote(quote, author) {
 function saveQuoteToLocal(content, author) {
   let quotes = JSON.parse(localStorage.getItem(LOCAL_QUOTES_KEY)) || [];
   quotes.push({ content, author });
-  // Limit cache size
   if (quotes.length > 20) quotes = quotes.slice(-20);
   localStorage.setItem(LOCAL_QUOTES_KEY, JSON.stringify(quotes));
 }
@@ -51,7 +58,6 @@ function getRandomCachedQuote() {
 // Theme toggle
 themeToggleBtn.addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
-  // Save preference
   localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
 });
 
@@ -61,13 +67,16 @@ themeToggleBtn.addEventListener('click', () => {
   if (theme === 'dark') document.body.classList.add('dark-mode');
 })();
 
+// Event listeners
 newQuoteBtn.addEventListener('click', fetchAndDisplayQuote);
 
 // On load
 window.addEventListener('load', () => {
   fetchAndDisplayQuote();
-  // Register service worker
-  if ('serviceWorker' in navigator) {
+
+  // Register service worker only on http(s) origins
+  if ('serviceWorker' in navigator &&
+      (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
     navigator.serviceWorker.register('service-worker.js');
   }
 });

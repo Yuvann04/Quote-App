@@ -6,8 +6,8 @@ const FILES_TO_CACHE = [
   '/index.html',
   '/styles.css',
   '/app.js',
-  '/icon-192.png', // only if this exists
-  '/icon-512.png', // only if this exists
+  '/1.jpg', // only if this exists
+  '/2.jpg', // only if this exists
   // optionally add OFFLINE_URL here
 ];
 

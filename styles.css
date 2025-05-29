@@ -1,101 +1,110 @@
-:root {
-  --bg-color: #f9f9f9;
-  --text-color: #222;
-  --accent-color: #0077ff;
-}
-
-body {
+/* General Reset */
+* {
   margin: 0;
   padding: 0;
-  background: var(--bg-color);
-  color: var(--text-color);
-  font-family: 'Segoe UI', Arial, sans-serif;
-  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #0077ff;
+  transition: color 0.3s;
+}
+
+body.dark-mode .title {
+  color: #bb86fc;
+}
+
+/* Fonts and Layout */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-header {
-  width: 100%;
-  text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  position: relative;
+.container {
+  max-width: 600px;
+  padding: 20px;
+  width: 90%;
 }
 
-#theme-toggle {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-  background: var(--accent-color);
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#quote-section {
-  background: #fff;
-  border-radius: 10px;
-  padding: 2rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-  margin-bottom: 1.5rem;
-  max-width: 400px;
+.card {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
   text-align: center;
 }
 
-blockquote {
-  font-size: 1.3rem;
+.quote {
+  font-size: 1.5rem;
   font-style: italic;
-  margin: 0 0 1rem 0;
+  margin-bottom: 20px;
+  line-height: 1.6;
 }
 
-cite {
-  display: block;
-  font-size: 1rem;
-  color: #666;
+.author {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 25px;
 }
 
-button#new-quote {
-  background: var(--accent-color);
-  color: #fff;
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.card-title {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #0077ff;
+  font-weight: 600;
+  text-align: center;
+  transition: color 0.3s;
+}
+
+body.dark-mode .card-title {
+  color: #bb86fc;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 30px;
   border: none;
-  border-radius: 20px;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s;
+  font-size: 1rem;
+  transition: background 0.3s, color 0.3s;
+  background-color: #0077ff;
+  color: #fff;
 }
 
-button#new-quote:hover {
-  background: #005bb5;
+button:hover {
+  background-color: #005dd1;
 }
 
-@media (max-width: 600px) {
-  #quote-section {
-    max-width: 95vw;
-    padding: 1rem;
-  }
-}
-
+/* Dark Mode */
 body.dark-mode {
-  --bg-color: #181a1b;
-  --text-color: #f1f1f1;
-  --accent-color: #ffb300;
-  background: var(--bg-color);
-  color: var(--text-color);
+  background-color: #121212;
+  color: #e1e1e1;
 }
 
-body.dark-mode #quote-section {
-  background: #23272b;
-  color: var(--text-color);
+body.dark-mode .card {
+  background-color: #1f1f1f;
+}
+
+body.dark-mode button {
+  background-color: #bb86fc;
+}
+
+body.dark-mode button:hover {
+  background-color: #985eff;
 }

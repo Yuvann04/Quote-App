@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quote of the Day</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="styles.css">
-  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InspireMe - Quote App</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <h1>Quote of the Day</h1>
-    <button id="theme-toggle">🌙 Dark Mode</button>
-  </header>
-  <main>
-    <section id="quote-section">
-      <blockquote id="quote">Loading...</blockquote>
-      <cite id="author"></cite>
-    </section>
-    <button id="new-quote">Fetch New Quote</button>
-  </main>
+
+  <div class="container">
+  <div class="card">
+    <h2 class="card-title">Quote of the Day</h2>  <!-- New heading here -->
+    <p id="quote" class="quote">Loading...</p>
+    <p id="author" class="author"></p>
+    <div class="buttons">
+      <button id="new-quote">🎲 New Quote</button>
+      <button id="theme-toggle">🌓 Toggle Theme</button>
+    </div>
+  </div>
+</div>
+
   <script src="app.js"></script>
 </body>
 </html>
